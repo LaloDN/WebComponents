@@ -3,14 +3,17 @@ class Input extends HTMLElement{
         super();
         this.attachShadow({mode:'open'});
         this._input;
-        this._template;
-        this._createInput();
-    }
-
-    /**Gets a input template and appends it to the shadow root */
-    _createInput() {
-        this._template = document.querySelector('template').content.cloneNode(true);
-        this.shadowRoot.appendChild(this._template);
+        this.shadowRoot.innerHTML = `
+            <style>
+                .hasError{
+                    background-color: pink;
+                    border: 1px solid red;
+                }
+            </style>
+            <slot></slot>
+            <slot name="some-text"></slot>
+            <input type="text">
+        `;
     }
 
     /**Check if the input of one box is mandatory  */
@@ -28,9 +31,9 @@ class Input extends HTMLElement{
     _onFocusOut(){
         if(this.hasAttribute('is-required')){
             if(this._input.value !== ''){
-                this._input.style.border = '1px solid black';
+                this._input.classList.remove('hasError');
             }else{
-                this._input.style.border = '1px solid red';
+                this._input.classList.add('hasError');
             }
         }
     }

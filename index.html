@@ -14,9 +14,16 @@
 <body>
     <!--Template content won't show in the html until some JS code appends him-->
     <template>
+        <slot></slot>
+        <slot name="some-text"></slot>
         <input type="text">
     </template>
-    <cus-input is-required></cus-input>
+    <cus-input is-required>
+        <span>Hello</span>
+    </cus-input>
+    <cus-input is-required>
+        <span slot="some-text" >This is a text</span>
+    </cus-input>
     <script src="./input.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>
