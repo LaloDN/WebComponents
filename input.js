@@ -44,6 +44,18 @@ class Input extends HTMLElement{
         this._input.addEventListener('focusout', this._onFocusOut.bind(this));
     }
 
+    attributeChangedCallback(name, oldValue, newValue){
+        if(newValue === null ){
+            this._input.classList.remove('hasError');
+            this._input.removeAttribute('required');
+        }
+    }
+
+    //This is where we define the attributes that we want to watch for changes
+    static get observedAttributes() {
+        return ['is-required']
+    }
+
 }
 
 //This function receives two arguments: the name of the element and the element that which inherits from
