@@ -5,6 +5,15 @@ class Input extends HTMLElement{
         this._input;
         this.shadowRoot.innerHTML = `
             <style>
+                :host{
+                    background-color: gold;
+                }
+                ::slotted(.slot){
+                    border: 5px solid brown;
+                }
+                :host-context(row){
+                    background-color: teal;
+                }
                 .hasError{
                     background-color: pink;
                     border: 1px solid red;
@@ -42,6 +51,10 @@ class Input extends HTMLElement{
         this._input = this.shadowRoot.querySelector('input'); //Get the input box from the shadow root to manipulate its attributes and functionality
         this._isInputRequired();
         this._input.addEventListener('focusout', this._onFocusOut.bind(this));
+    }
+
+    disconnectedCallback(){
+        this._input.removeEventListener('focusout',this._onFocusOut.bint(this));
     }
 
     attributeChangedCallback(name, oldValue, newValue){
