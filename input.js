@@ -1,18 +1,16 @@
 class Input extends HTMLElement{
     constructor(){
         super();
-        this.attachShadow({mode:'open'})
+        this.attachShadow({mode:'open'});
         this._input;
+        this._template;
         this._createInput();
     }
 
-    /**
-         *Defines an input element and appends to the DOM 
-         */
+    /**Gets a input template and appends it to the shadow root */
     _createInput() {
-        
-        this._input = document.createElement('input');
-        this.shadowRoot.appendChild(this._input);
+        this._template = document.querySelector('template').content.cloneNode(true);
+        this.shadowRoot.appendChild(this._template);
     }
 
     /**Check if the input of one box is mandatory  */
@@ -38,6 +36,7 @@ class Input extends HTMLElement{
     }
 
     connectedCallback() {
+        this._input = this.shadowRoot.querySelector('input'); //Get the input box from the shadow root to manipulate its attributes and functionality
         this._isInputRequired();
         this._input.addEventListener('focusout', this._onFocusOut.bind(this));
     }
